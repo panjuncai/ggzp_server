@@ -24,7 +24,7 @@ router.post('/api/register', async (req, res, next) => {
                 }
                 const newUser = new UserModel({username: username, password: md5(password), type, header: randomHeader})
                 const savedUser = await newUser.save()
-                res.cookie('userid', savedUser._id.toString(), {maxAge: 1000 * 60 * 60 * 24 * 7})
+                res.cookie('userid', savedUser._id.toString(), {maxAge: 1000 * 60 * 60 * 24})
                 res.send({code: 0, data: {_id: savedUser._id, username, type}})
             }, 20)
         } catch (err) {
@@ -48,7 +48,7 @@ router.post('/api/login', async (req, res) => {
             if (!user) {
                 return res.send({code: 1, msg: '密码错误'})
             }
-            res.cookie('userid', user._id.toString(), {maxAge: 1000 * 60 * 60 * 24 * 7})
+            res.cookie('userid', user._id.toString(), {maxAge: 1000 * 60 * 60 * 24})
             res.send({code: 0, data: user})
         }, 20)
     } catch (err) {
