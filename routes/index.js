@@ -12,7 +12,7 @@ router.get('/', function (req, res, next) {
     res.render('index', {title: 'Express'});
 });
 
-router.post('/register', async (req, res, next) => {
+router.post('/api/register', async (req, res, next) => {
         try {
             const {username, password, type} = req.body
             // console.log(`username is ${username},password is ${password},type is ${type}`)
@@ -34,7 +34,7 @@ router.post('/register', async (req, res, next) => {
     }
 )
 
-router.post('/login', async (req, res) => {
+router.post('/api/login', async (req, res) => {
     try {
         const {username, password} = req.body
         const user1 = await UserModel.findOne({username}, filter)
@@ -57,7 +57,7 @@ router.post('/login', async (req, res) => {
     }
 })
 
-router.post('/deleteUser', async (req, res, next) => {
+router.post('/api/deleteUser', async (req, res, next) => {
         try {
             const userid = req.cookies.userid
             if (!userid) {
@@ -80,7 +80,7 @@ router.post('/deleteUser', async (req, res, next) => {
     }
 )
 
-router.post('/update', async (req, res) => {
+router.post('/api/update', async (req, res) => {
     try {
         const userid = req.cookies.userid
         if (!userid) {
@@ -113,7 +113,7 @@ router.post('/update', async (req, res) => {
     }
 })
 
-router.get('/user', async (req, res) => {
+router.get('/api/user', async (req, res) => {
     try {
         const userid = req.cookies.userid
         if (!userid) {
@@ -134,7 +134,7 @@ router.get('/user', async (req, res) => {
     }
 })
 
-router.get('/allLaobans', async (req, res) => {
+router.get('/api/allLaobans', async (req, res) => {
     try {
         const userid = req.cookies.userid
         if (!userid) {
@@ -153,7 +153,7 @@ router.get('/allLaobans', async (req, res) => {
     }
 })
 
-router.get('/allDashens', async (req, res) => {
+router.get('/api/allDashens', async (req, res) => {
     try {
         const userid = req.cookies.userid
         if (!userid) {
@@ -175,7 +175,7 @@ router.get('/allDashens', async (req, res) => {
 
 
 // 获取当前用户所有相关聊天信息列表
-router.get('/msglist', async (req, res) =>{
+router.get('/api/msglist', async (req, res) =>{
     try {
         // 获取 cookie 中的 userid
         const userid = req.cookies.userid
@@ -197,7 +197,7 @@ router.get('/msglist', async (req, res) =>{
 })
 
 // 修改指定消息为已读
-router.post('/readmsg', function (req, res) {
+router.post('/api/readmsg', function (req, res) {
     // 得到请求中的 from 和 to
     const from = req.body.from
     const to = req.cookies.userid
