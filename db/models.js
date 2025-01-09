@@ -1,6 +1,11 @@
 const md5 = require('blueimp-md5')
 const mongoose = require('mongoose')
-mongoose.connect('mongodb://localhost:27017/ggzp_db')
+console.log(`process.env.NODE_ENV is ${process.env.NODE_ENV}`)
+if(process.env.NODE_ENV === "production" ) {
+    mongoose.connect('mongodb://root:iamveryStrong!@localhost:26214/ggzp_db?authSource=admin')
+}else{
+    mongoose.connect('mongodb://localhost/ggzp_db')
+}
 const conn = mongoose.connection
 conn.on('connected', function () {
     console.log('db connected...')

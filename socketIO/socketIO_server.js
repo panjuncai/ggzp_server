@@ -6,7 +6,7 @@ module.exports = function (server) {
     // 得到操作服务器端 sokectIO 的 io 对象
     const io = require('socket.io')(server, {
         cors: {
-            origin: process.env.NODE_ENV === "production" ? "101.133.149.17" : "http://localhost:3000",
+            origin: process.env.NODE_ENV === "production" ? "bigclouder.com" : "http://localhost:3000",
             methods: ["GET", "POST"],
             transports: ["websocket","polling"],
             credentials: true

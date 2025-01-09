@@ -17,7 +17,7 @@ router.post('/api/register', async (req, res, next) => {
             const {username, password, type} = req.body
             // console.log(`username is ${username},password is ${password},type is ${type}`)
             const user = await UserModel.findOne({username})
-            const randomHeader = Math.floor(Math.random() * 20) + 1;
+            const randomHeader = Math.floor(Math.random() * 8) + 1;
             setTimeout(async () => {
                 if (user) {
                     return res.send({code: 1, msg: '用户已存在'})
@@ -80,6 +80,26 @@ router.post('/api/deleteUser', async (req, res, next) => {
     }
 )
 
+router.post('/api/deleteMsg', async (req, res, next) => {
+        try {
+            const userid = req.cookies.userid
+            if (!userid) {
+                return res.send({code: 1, msg: '请先登录'})
+            }
+
+            const {to,from,content,chat_id} = req.body
+            const result = await ChatModel.deleteOne({to,from,content,chat_id})
+            // 检查是否成功删除
+            if (result.deletedCount === 0) {
+                return res.status(404).send({code: 1, msg: '未找到消息'});
+            }
+            res.send({code: 0, msg: '删除成功', data: null});
+        } catch (err) {
+            console.error('Error during registration:', err);
+            res.status(500).send({code: 1, msg: '服务器错误' + err.message});
+        }
+    }
+)
 router.post('/api/update', async (req, res) => {
     try {
         const userid = req.cookies.userid
